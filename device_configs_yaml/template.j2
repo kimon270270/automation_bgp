@@ -1,0 +1,74 @@
+enable
+configure teminal
+ip routing
+
+hostname {{ device.name }}
+enable password DeviceAdmin
+
+{% if device.name == 'Core-Router' or device.name == 'Route-Reflector' or device.name == 'ISP1' or device.name == 'ISP2' device.name == 'Internet' %}
+router bgp {{ bgp.AS }}
+router-id {{ bgp.router-id }}
+{% endif %}
+
+{% for neighbor in bgp.neighborship  %}
+neighbor {{ neighbor.ip }} remote-as {{ neighbor.as }}
+{% if device.name == 'Core-Router' %}
+neighbor 192.168.200.21 default-originate always
+{% endif %}
+{% endfor %}
+
+{% for advert in bgp.advertisement %}
+network {{ advert.ip }} mask {{ advert.mask }}
+{% endfor %}
+
+{% if device.name == 'Core-Router' %}
+route-map Primary-Path
+description {{primary-path.description}}
+set local-preferennce {{primary-path.local-pref}}
+exit
+
+route-map Secondary-Path
+description {{secondary-path.description}}
+set as-path {{ bgp.AS }} {{ bgp.AS }} {{ bgp.AS }} {{ bgp.AS }}
+exit
+
+router bgp {{ bgp.AS }}
+neighbor {{ primary-path.ip }} route-map Primary-Path in
+neighbor {{ secondary-path.ip }} route-map Secondary-Path out
+{% endif %}
+{% endif %}
+
+{% if device.name != 'Core-Router' or device.name != 'ISP1' or device.name != 'ISP2' device.name != 'Internet' %}
+router ospf 1
+router-id {device.ospf-router-id}
+auto-cost reference-bandwidth 1000
+{% if device.name == 'Route-Reflector' %}
+default-information originate always
+exit
+{% endif %}
+{% endif %}
+
+
+{% for interface in interfaces %}
+interface Ehternet{{ interface.port }}
+no shutdown
+no switchport
+description {{ interface.description }}
+ip address {{ interface.ip }} {{ interface.mask }}
+{{% if device.name == 'Route-Reflector' or device.name == 'Router1' or device.name == 'Router2' or device.name == 'Router3' or device.name == 'Router4' or device.name == 'Router5' %}}
+ip ospf area 0
+exit
+{% endif %}
+{% endfor %}
+
+{{% if device.name == 'Router1' or device.name == 'Router2' or device.name == 'Router3' or device.name == 'Router4' or device.name == 'Router5' %}}
+interface vlan 1
+no shut
+ip address {{ vlan1-ip }} {{ vlan1-mask }}
+exit
+
+banner motd
+------------------------ Authorized Access Only !!! -----------------------------EOF
+
+exit
+write memory
