@@ -1,0 +1,57 @@
+name: BGP-Topology
+
+
+topology:
+  nodes:
+    Internet:
+      kind: arista_ceos
+      image: ceos:4.36.1F
+
+    ISP1:
+      kind: arista_ceos
+      image: ceos:4.36.1F
+
+    ISP2:
+      kind: arista_ceos
+      image: ceos:4.36.1F
+
+    Core-Router:
+      kind: arista_ceos
+      image: ceos:4.36.1F
+
+    Route-Reflector:
+      kind: arista_ceos
+      image: ceos:4.36.1F
+
+    Router1:
+      kind: arista_ceos
+      image: ceos:4.36.1F
+
+    Router2:
+      kind: arista_ceos
+      image: ceos:4.36.1F
+
+    Router3:
+      kind: arista_ceos
+      image: ceos:4.36.1F
+
+    Router4:
+      kind: arista_ceos
+      image: ceos:4.36.1F
+
+    Router5:
+      kind: arista_ceos
+      image: ceos:4.36.1F
+
+
+  links:
+    - endpoints: ["Internet:eth1", "ISP1:eth1"]
+    - endpoints: ["Internet:eth2", "ISP2:eth1"]
+    - endpoints: ["Core-Router:eth1", "ISP1:eth2"]
+    - endpoints: ["Core-Router:eth2", "ISP2:eth2"]
+    - endpoints: ["Core-Router:eth3", "Route-Reflector:eth1"]
+    - endpoints: ["Route-Reflector:eth2", "Router1:eth1"]
+    - endpoints: ["Route-Reflector:eth3", "Router2:eth1"]
+    - endpoints: ["Route-Reflector:eth4", "Router3:eth1"]
+    - endpoints: ["Route-Reflector:eth5", "Router4:eth1"]
+    - endpoints: ["Route-Reflector:eth6", "Router5:eth1"]
