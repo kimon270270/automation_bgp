@@ -1,12 +1,14 @@
 device:
-  - name: Router1
-  - vlan1-ip: 192.168.10.1
-  - vlan1-mask: 255.255.255.255
-  - ospf-router-id: 10.10.10.10
+  name: Router1
+  vlan1Ip: 192.168.10.1
+  vlan1Mask: 255.255.255.255
+  role: Site
+
+routerID:
+  ospf: 10.10.10.10
 
 interfaces:
-  - Ethernet1:
-      - port: 1
-      - description: "Route-Reflector eth2 192.168.200.1"
-      - ip: 192.168.200.2
-      - mask: 255.255.255.252
+- port: 1
+  description: "Route-Reflector eth2 192.168.200.1"
+  ip: 192.168.200.2
+  mask: 255.255.255.252

@@ -1,0 +1,43 @@
+enable
+configure teminal
+ip routing
+
+hostname Router1
+enable password DeviceAdmin
+
+
+
+
+
+
+router ospf 1
+router-id 10.10.10.10
+auto-cost reference-bandwidth 1000
+
+
+
+
+
+interface Ehternet1
+no shutdown
+no switchport
+description Route-Reflector eth2 192.168.200.1
+ip address 192.168.200.2 255.255.255.252
+
+ip ospf area 0
+exit
+
+
+
+
+interface vlan 1
+no shut
+ip address 192.168.10.1 255.255.255.255
+
+exit
+
+banner motd
+------------------------ Authorized Access Only !!! -----------------------------EOF
+
+exit
+write memory

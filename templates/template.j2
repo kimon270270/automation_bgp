@@ -5,10 +5,9 @@ ip routing
 hostname {{ device.name }}
 enable password DeviceAdmin
 
-{% if device.name == 'Core-Router' or device.name == 'Route-Reflector' or device.name == 'ISP1' or device.name == 'ISP2' device.name == 'Internet' %}
+{% if device.role in ['Core', 'ISP', 'Internet', 'Reflector'] %}
 router bgp {{ bgp.AS }}
-router-id {{ bgp.router-id }}
-{% endif %}
+router-id {{ routerID.bgp }}
 
 {% for neighbor in bgp.neighborship  %}
 neighbor {{ neighbor.ip }} remote-as {{ neighbor.as }}
@@ -20,8 +19,9 @@ neighbor 192.168.200.21 default-originate always
 {% for advert in bgp.advertisement %}
 network {{ advert.ip }} mask {{ advert.mask }}
 {% endfor %}
+{% endif %}
 
-{% if device.name == 'Core-Router' %}
+{% if device.role == 'Core' %}
 route-map Primary-Path
 description {{primary-path.description}}
 set local-preferennce {{primary-path.local-pref}}
@@ -36,13 +36,12 @@ router bgp {{ bgp.AS }}
 neighbor {{ primary-path.ip }} route-map Primary-Path in
 neighbor {{ secondary-path.ip }} route-map Secondary-Path out
 {% endif %}
-{% endif %}
 
-{% if device.name != 'Core-Router' or device.name != 'ISP1' or device.name != 'ISP2' device.name != 'Internet' %}
+{% if device.role in [ 'Reflector', 'Site' ] %}
 router ospf 1
-router-id {device.ospf-router-id}
+router-id {{ routerID.ospf }}
 auto-cost reference-bandwidth 1000
-{% if device.name == 'Route-Reflector' %}
+{% if device.role == 'Reflector' %}
 default-information originate always
 exit
 {% endif %}
@@ -55,16 +54,17 @@ no shutdown
 no switchport
 description {{ interface.description }}
 ip address {{ interface.ip }} {{ interface.mask }}
-{{% if device.name == 'Route-Reflector' or device.name == 'Router1' or device.name == 'Router2' or device.name == 'Router3' or device.name == 'Router4' or device.name == 'Router5' %}}
+{% if device.role in [ 'Reflector', 'Site' ] %}
 ip ospf area 0
 exit
 {% endif %}
 {% endfor %}
 
-{{% if device.name == 'Router1' or device.name == 'Router2' or device.name == 'Router3' or device.name == 'Router4' or device.name == 'Router5' %}}
+{% if device.role == 'Site' %}
 interface vlan 1
 no shut
-ip address {{ vlan1-ip }} {{ vlan1-mask }}
+ip address {{ device.vlan1Ip }} {{ device.vlan1Mask }}
+{% endif %}
 exit
 
 banner motd
