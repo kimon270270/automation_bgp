@@ -23,24 +23,25 @@ network {{ advert.ip }} mask {{ advert.mask }}
 
 {% if device.role == 'Core' %}
 route-map Primary-Path
-description {{primary-path.description}}
-set local-preferennce {{primary-path.local-pref}}
+description {{primaryPath.description}}
+set local-preferennce {{primaryPath.localPref}}
 exit
 
 route-map Secondary-Path
-description {{secondary-path.description}}
+description {{secondaryPath.description}}
 set as-path {{ bgp.AS }} {{ bgp.AS }} {{ bgp.AS }} {{ bgp.AS }}
 exit
 
 router bgp {{ bgp.AS }}
-neighbor {{ primary-path.ip }} route-map Primary-Path in
-neighbor {{ secondary-path.ip }} route-map Secondary-Path out
+neighbor {{ primaryPath.ip }} route-map Primary-Path in
+neighbor {{ secondaryPath.ip }} route-map Secondary-Path out
 {% endif %}
 
 {% if device.role in [ 'Reflector', 'Site' ] %}
 router ospf 1
 router-id {{ routerID.ospf }}
 auto-cost reference-bandwidth 1000
+ip ospf network point-to-point
 {% if device.role == 'Reflector' %}
 default-information originate always
 exit
@@ -60,11 +61,9 @@ exit
 {% endif %}
 {% endfor %}
 
-{% if device.role == 'Site' %}
 interface vlan 1
 no shut
 ip address {{ device.vlan1Ip }} {{ device.vlan1Mask }}
-{% endif %}
 exit
 
 banner motd
