@@ -1,0 +1,32 @@
+device:
+  name: ISP2
+  vlan1Ip: 192.168.90.1
+  vlan1Mask: 255.255.255.0
+  role: ISP
+
+routerID:
+  bgp: 5.5.5.5
+
+bgp:
+  AS: 65003
+  neighborship:
+  - ip: 192.168.200.29
+    as: 65001
+
+  - ip: 192.168.200.38
+    as: 65004
+
+  advertisement:
+  - ip: 192.168.90.0
+    mask: 255.255.255.0
+
+interfaces:
+- port: 1
+  description: "Internet eth2 192.168.200.38"
+  ip: 192.168.200.37
+  mask: 255.255.255.252
+
+- port: 2
+  description: "Core-Router eth2 192.168.200.29"
+  ip: 192.168.200.30
+  mask: 255.255.255.252

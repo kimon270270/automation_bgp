@@ -1,7 +1,7 @@
 device:
   name: Router1
   vlan1Ip: 192.168.10.1
-  vlan1Mask: 255.255.255.255
+  vlan1Mask: 255.255.255.0
   role: Site
 
 routerID:

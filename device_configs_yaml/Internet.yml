@@ -1,0 +1,33 @@
+device:
+  name: Internet
+  vlan1Ip: 192.168.100.1
+  vlan1Mask: 255.255.255.0
+  role: Internet
+
+routerID:
+  bgp: 20.20.20.20
+  
+bgp:
+  AS: 65004
+  neighborship:
+    - ip: 192.168.200.33
+      as: 65002
+
+    - ip: 192.168.200.37
+      as: 65003
+
+  advertisement:
+    - ip: 192.168.100.0
+      mask: 255.255.255.0
+
+interfaces:
+  - port: 1
+    description: "ISP1 eth1 192.168.200.33"
+    ip: 192.168.200.34
+    mask: 255.255.255.252
+
+  - port: 2
+    description: "ISP2 eth1 192.168.200.37"
+    ip: 192.168.200.37
+    mask: 255.255.255.252
+

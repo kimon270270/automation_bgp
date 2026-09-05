@@ -1,0 +1,64 @@
+device:
+  name: Core-Router
+  vlan1Ip: 192.168.70.1
+  vlan1Mask: 255.255.255.0
+  role: Core
+
+routerID:
+  bgp: 2.2.2.2
+
+bgp:
+  AS: 65001
+  neighborship:
+  - ip: 192.168.200.26
+    as: 65002
+
+  - ip: 192.168.200.30
+    as: 65003
+
+  advertisement:
+  - ip: 192.168.70.0
+    mask: 255.255.255.0
+
+  - ip: 192.168.60.0
+    mask: 255.255.255.0
+
+  - ip: 192.168.10.0
+    mask: 255.255.255.0
+
+  - ip: 192.168.20.0
+    mask: 255.255.255.0
+
+  - ip: 192.168.30.0
+    mask: 255.255.255.0
+
+  - ip: 192.168.40.0
+    mask: 255.255.255.0
+
+  - ip: 192.168.50.0
+    mask: 255.255.255.0
+
+primaryPath:
+  description: "Connection to ISP1 - Primary"
+  localPref: 200
+  ip: 192.168.200.26
+
+secondaryPath:
+  description: "Connection to ISP2 - Secondary"
+  ip: 192.168.200.30
+
+interfaces:
+- port: 1
+  description: "ISP1 eth2 192.168.200.26"
+  ip: 192.168.200.25
+  mask: 255.255.255.252
+
+- port: 2
+  description: "ISP2 eth2 192.168.200.30"
+  ip: 192.168.200.29
+  mask: 255.255.255.252
+
+- port: 3
+  description: "Route-Reflector eth1 192.168.200.21"
+  ip: 192.168.200.22
+  mask: 255.255.255.252

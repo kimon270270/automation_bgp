@@ -1,0 +1,14 @@
+device:
+  name: Router3
+  vlan1Ip: 192.168.30.1
+  vlan1Mask: 255.255.255.0
+  role: Site
+
+routerID:
+  ospf: 30.30.30.30
+
+interfaces:
+- port: 1
+  description: "Route-Reflector eth4 192.168.200.9"
+  ip: 192.168.200.10
+  mask: 255.255.255.252

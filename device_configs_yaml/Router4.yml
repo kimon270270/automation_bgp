@@ -1,0 +1,14 @@
+device:
+  name: Router4
+  vlan1Ip: 192.168.40.1
+  vlan1Mask: 255.255.255.0
+  role: Site
+
+routerID:
+  ospf: 40.40.40.40
+
+interfaces:
+- port: 1
+  description: "Route-Reflector eth5 192.168.200.13"
+  ip: 192.168.200.14
+  mask: 255.255.255.252
