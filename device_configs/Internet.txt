@@ -1,0 +1,55 @@
+enable
+configure teminal
+ip routing
+
+hostname Internet
+enable password DeviceAdmin
+
+
+router bgp 65004
+router-id 20.20.20.20
+
+
+neighbor 192.168.200.33 remote-as 65002
+
+
+neighbor 192.168.200.37 remote-as 65003
+
+
+
+
+network 192.168.100.0 mask 255.255.255.0
+
+
+
+
+
+
+
+
+
+interface Ehternet1
+no shutdown
+no switchport
+description ISP1 eth1 192.168.200.33
+ip address 192.168.200.34 255.255.255.252
+
+
+interface Ehternet2
+no shutdown
+no switchport
+description ISP2 eth1 192.168.200.37
+ip address 192.168.200.37 255.255.255.252
+
+
+
+interface vlan 1
+no shut
+ip address 192.168.100.1 255.255.255.0
+exit
+
+banner motd
+------------------------ Authorized Access Only !!! -----------------------------EOF
+
+exit
+write memory
