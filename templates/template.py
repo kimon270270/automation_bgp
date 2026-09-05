@@ -19,11 +19,6 @@ for path in yml_paths:
 
 # rendering template for each yml file
 for path in paths:
-    # getting device name from the file
-    file_name = os.path.basename(path)
-    file = file_name.split(".")
-    device_name = file[0]
-
     # getting device name from yml file
     with open (path, 'r') as f:
     # with open ("device_configs_yaml/Router1.yml") as f:
