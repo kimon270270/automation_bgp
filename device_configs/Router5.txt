@@ -1,5 +1,4 @@
-enable
-configure teminal
+
 ip routing
 
 hostname Router5
@@ -10,33 +9,38 @@ enable password DeviceAdmin
 
 
 
+
 router ospf 1
 router-id 50.50.50.50
 auto-cost reference-bandwidth 1000
-ip ospf network point-to-point
 
 
 
 
 
-interface Ehternet1
+interface Ethernet 1
 no shutdown
 no switchport
-description Route-Reflector eth6 192.168.200.17
-ip address 192.168.200.18 255.255.255.252
+description Transit-Router eth6 192.168.200.17
+ip address 192.168.200.18/30
 
 ip ospf area 0
+ip ospf network point-to-point
 exit
 
 
 
 interface vlan 1
 no shut
-ip address 192.168.50.1 255.255.255.0
+ip address 192.168.50.1/24
+
+ip ospf area 0
+
 exit
 
 banner motd
------------------------- Authorized Access Only !!! -----------------------------EOF
+------------------------ Authorized Access Only !!! -----------------------------
+EOF
 
 exit
 write memory

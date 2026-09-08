@@ -1,5 +1,4 @@
-enable
-configure teminal
+
 ip routing
 
 hostname ISP2
@@ -10,15 +9,11 @@ router bgp 65003
 router-id 5.5.5.5
 
 
-neighbor 192.168.200.29 remote-as 65001
 
 
-neighbor 192.168.200.38 remote-as 65004
+network 192.168.90.0/24
 
-
-
-
-network 192.168.90.0 mask 255.255.255.0
+exit
 
 
 
@@ -28,28 +23,30 @@ network 192.168.90.0 mask 255.255.255.0
 
 
 
-interface Ehternet1
+interface Ethernet 1
 no shutdown
 no switchport
 description Internet eth2 192.168.200.38
-ip address 192.168.200.37 255.255.255.252
+ip address 192.168.200.37/30
 
 
-interface Ehternet2
+interface Ethernet 2
 no shutdown
 no switchport
-description Core-Router eth2 192.168.200.29
-ip address 192.168.200.30 255.255.255.252
+description Edge-Router eth2 192.168.200.29
+ip address 192.168.200.30/30
 
 
 
 interface vlan 1
 no shut
-ip address 192.168.90.1 255.255.255.0
+ip address 192.168.90.1/24
+
 exit
 
 banner motd
------------------------- Authorized Access Only !!! -----------------------------EOF
+------------------------ Authorized Access Only !!! -----------------------------
+EOF
 
 exit
 write memory
