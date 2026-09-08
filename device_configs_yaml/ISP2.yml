@@ -1,7 +1,7 @@
 device:
   name: ISP2
   vlan1Ip: 192.168.90.1
-  vlan1Mask: 255.255.255.0
+  vlan1cidr: /24
   role: ISP
 
 routerID:
@@ -18,15 +18,15 @@ bgp:
 
   advertisement:
   - ip: 192.168.90.0
-    mask: 255.255.255.0
+    cidr: /24
 
 interfaces:
 - port: 1
   description: "Internet eth2 192.168.200.38"
   ip: 192.168.200.37
-  mask: 255.255.255.252
+  cidr: /30
 
 - port: 2
-  description: "Core-Router eth2 192.168.200.29"
+  description: "Edge-Router eth2 192.168.200.29"
   ip: 192.168.200.30
-  mask: 255.255.255.252
+  cidr: /30

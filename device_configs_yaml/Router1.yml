@@ -1,7 +1,7 @@
 device:
   name: Router1
   vlan1Ip: 192.168.10.1
-  vlan1Mask: 255.255.255.0
+  vlan1cidr: /24
   role: Site
 
 routerID:
@@ -9,6 +9,6 @@ routerID:
 
 interfaces:
 - port: 1
-  description: "Route-Reflector eth2 192.168.200.1"
+  description: "Transit-Router eth2 192.168.200.1"
   ip: 192.168.200.2
-  mask: 255.255.255.252
+  cidr: /30
