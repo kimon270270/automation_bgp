@@ -1,48 +1,49 @@
-enable
-configure teminal
+
 ip routing
 
 hostname {{ device.name }}
 enable password DeviceAdmin
 
-{% if device.role in ['Core', 'ISP', 'Internet', 'Reflector'] %}
+{% if device.role in ['Edge', 'ISP', 'Internet', 'Transit'] %}
 router bgp {{ bgp.AS }}
 router-id {{ routerID.bgp }}
 
+{% if device.role == 'Edge' %}
+neighbor 192.168.200.21 default-originate always
 {% for neighbor in bgp.neighborship  %}
 neighbor {{ neighbor.ip }} remote-as {{ neighbor.as }}
-{% if device.name == 'Core-Router' %}
-neighbor 192.168.200.21 default-originate always
-{% endif %}
 {% endfor %}
+{% endif %}
 
 {% for advert in bgp.advertisement %}
-network {{ advert.ip }} mask {{ advert.mask }}
+network {{ advert.ip }}{{ advert.cidr }}
 {% endfor %}
+exit
 {% endif %}
 
-{% if device.role == 'Core' %}
+
+{% if device.role == 'Edge' %}
 route-map Primary-Path
 description {{primaryPath.description}}
-set local-preferennce {{primaryPath.localPref}}
+set local-preference {{primaryPath.localPref}}
 exit
 
 route-map Secondary-Path
 description {{secondaryPath.description}}
-set as-path {{ bgp.AS }} {{ bgp.AS }} {{ bgp.AS }} {{ bgp.AS }}
+set as-path prepend {{ bgp.AS }} {{ bgp.AS }} {{ bgp.AS }} {{ bgp.AS }}
 exit
 
 router bgp {{ bgp.AS }}
 neighbor {{ primaryPath.ip }} route-map Primary-Path in
 neighbor {{ secondaryPath.ip }} route-map Secondary-Path out
+exit
 {% endif %}
 
-{% if device.role in [ 'Reflector', 'Site' ] %}
+{% if device.role in [ 'Transit', 'Site' ] %}
 router ospf 1
 router-id {{ routerID.ospf }}
 auto-cost reference-bandwidth 1000
-ip ospf network point-to-point
-{% if device.role == 'Reflector' %}
+{% if device.role == 'Transit' %}
 default-information originate always
 exit
 {% endif %}
@@ -50,24 +51,29 @@ exit
 
 
 {% for interface in interfaces %}
-interface Ehternet{{ interface.port }}
+interface Ethernet {{ interface.port }}
 no shutdown
 no switchport
 description {{ interface.description }}
-ip address {{ interface.ip }} {{ interface.mask }}
-{% if device.role in [ 'Reflector', 'Site' ] %}
+ip address {{ interface.ip }}{{ interface.cidr }}
+{% if device.role in [ 'Transit', 'Site' ] %}
 ip ospf area 0
+ip ospf network point-to-point
 exit
 {% endif %}
 {% endfor %}
 
 interface vlan 1
 no shut
-ip address {{ device.vlan1Ip }} {{ device.vlan1Mask }}
+ip address {{ device.vlan1Ip }}{{ device.vlan1cidr }}
+{% if device.role == 'Site' %}
+ip ospf area 0
+{% endif %}
 exit
 
 banner motd
------------------------- Authorized Access Only !!! -----------------------------EOF
+------------------------ Authorized Access Only !!! -----------------------------
+EOF
 
 exit
 write memory
