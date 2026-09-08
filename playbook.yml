@@ -3,12 +3,12 @@
   hosts: all
 
   vars_files:
-    - creds/cred.yml
+  - creds/cred.yml
 
   tasks:
-    - name: Load Configuration
-      ansible.netcommon.cli_config:
-        config: "{{ lookup('file', './device_configs/' + inventory_host + '.txt') }}"
-        backup: yes
-        commit: no
+  - name: Load Configuration
+    ansible.netcommon.cli_config:
+      config: "{{ lookup('file', './device_configs/' + inventory_hostname + '.txt') }}"
+      backup: yes
+      commit: no
 ...
