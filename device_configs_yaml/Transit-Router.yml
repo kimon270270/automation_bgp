@@ -2,7 +2,7 @@ device:
   name: Transit-Router
   vlan1Ip: 192.168.60.1
   vlan1cidr: /24
-  role: Reflector
+  role: Transit
 
 routerID:
   ospf: 60.60.60.60
