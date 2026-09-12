@@ -1,7 +1,7 @@
-! Startup-config last modified at Sat Sep 12 16:41:46 2026 by admin
+! Startup-config last modified at Sat Sep 12 17:25:13 2026 by admin
 ! device: Transit-Router (cEOSLab, EOS-4.36.1F-48405728.4361F.1 (engineering build))
 !
-enable password sha512 $6$NcDcTyEvwRVe.fTS$5hZUifIAPqsO8NhECsJGEgoCXEW/zU6Wil3.XmMZuk.KdQpfqMlkeP5CWMjYXZN.vkGOeBNP2yVA5lw9HONRc/
+enable password sha512 $6$/fvaPHldFmHDkxQV$Ibtc3Y7ZKJgXQTY.wGzYDakR4KE2gF3ffZauhUsWdoaxTfU/x.g/700z86NblmeC2YYWyDbIF3Q2oCIbOfy1b1
 no aaa root
 !
 username admin privilege 15 role network-admin secret sha512 $6$v3yxa4TxVK.Cd8SC$EsJfiQE/LrCPSvRai4SsEZf2qrI8LEFVyecRFowsVscjzmTUVTNpVu2GkR1u0JEx8TodKmcrzv8IV7h4KBA5H1
@@ -72,6 +72,7 @@ interface Management0
    ipv6 address 3fff:172:20:20::7/64
 !
 interface Vlan1
+   no autostate
    ip address 192.168.60.1/24
    ip ospf area 0.0.0.0
 !
