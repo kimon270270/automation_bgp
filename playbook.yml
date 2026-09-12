@@ -9,6 +9,4 @@
   - name: Load Configuration
     ansible.netcommon.cli_config:
       config: "{{ lookup('file', './device_configs/' + inventory_hostname + '.txt') }}"
-      backup: yes
-      commit: no
 ...
