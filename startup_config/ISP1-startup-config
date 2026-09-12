@@ -1,0 +1,61 @@
+! Startup-config last modified at Sat Sep 12 06:00:46 2026 by admin
+! device: ISP1 (cEOSLab, EOS-4.36.1F-48405728.4361F.1 (engineering build))
+!
+enable password sha512 $6$tsUUzGZIIWrwTTLi$D2mZOnMVr5lDDze4kz.v22pTGoDhux.myu2aFf.LmZX.LTHFfkLHReMvsv90Jj.xXO5S/yRWC/sIor9YAbwFN/
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$MOgk7Ka7SrJ6URDi$iRLaZ7PV618WPE7Oa9Jgiq.VXgSF6LficAjODk9AW5PzypJFzE1jZftPi5K/uglfMXGsJM0mvSP/rm4taL7.L1
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+service routing protocols model multi-agent
+!
+hostname ISP1
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+banner motd
+------------------------ Authorized Access Only !!! -----------------------------
+EOF
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   description Internet eth1 192.168.200.34
+   no switchport
+   ip address 192.168.200.33/30
+!
+interface Ethernet2
+   description Edge-Router eth1 192.168.200.25
+   no switchport
+   ip address 192.168.200.26/30
+!
+interface Management0
+   ip address 172.20.20.8/24
+   ipv6 address 3fff:172:20:20::8/64
+!
+interface Vlan1
+   ip address 192.168.80.1/24
+!
+ip routing
+!
+ip route 0.0.0.0/0 172.20.20.1
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+router bgp 65002
+   router-id 10.10.10.10
+   network 192.168.80.0/24
+!
+end

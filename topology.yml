@@ -5,42 +5,51 @@ topology:
     Internet:
       kind: arista_ceos
       image: ceos:4.36.1F
+      startup-config: startup_config/Internet-startup-config
 
     ISP1:
       kind: arista_ceos
       image: ceos:4.36.1F
+      startup-config: startup_config/ISP1-startup-config
 
     ISP2:
       kind: arista_ceos
       image: ceos:4.36.1F
+      startup-config: startup_config/ISP2-startup-config
 
     Edge-Router:
       kind: arista_ceos
       image: ceos:4.36.1F
+      startup-config: startup_config/Edge-Router-startup-config
 
     Transit-Router:
       kind: arista_ceos
       image: ceos:4.36.1F
+      startup-config: startup_config/Transit-Router-startup-config
 
     Router1:
       kind: arista_ceos
       image: ceos:4.36.1F
-
+      startup-config: startup_config/Router1-startup-config
     Router2:
       kind: arista_ceos
       image: ceos:4.36.1F
+      startup-config: startup_config/Router2-startup-config
 
     Router3:
       kind: arista_ceos
       image: ceos:4.36.1F
+      startup-config: startup_config/Router3-startup-config
 
     Router4:
       kind: arista_ceos
       image: ceos:4.36.1F
+      startup-config: startup_config/Router4-startup-config
 
     Router5:
       kind: arista_ceos
       image: ceos:4.36.1F
+      startup-config: startup_config/Router5-startup-config
 
   links:
   - endpoints: [ "Internet:eth1", "ISP1:eth1" ]

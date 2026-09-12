@@ -1,0 +1,59 @@
+! Startup-config last modified at Sat Sep 12 06:00:52 2026 by admin
+! device: Router5 (cEOSLab, EOS-4.36.1F-48405728.4361F.1 (engineering build))
+!
+enable password sha512 $6$.jKtkxN210.s5H3b$qIXPp82lzWmQO5ZbeHhADjBDLJLWfrL3D0L7urJ67nCk7KvU8JNucf./Ge7VO.7k0/dGF4Hs34OfApt25bI5h/
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$NbrCU/jfdUK3SxJz$442d9/4wJ9DfH4cdcO6aj8Ov6UaZuWh1Uf.kbsJFREQ2MBJoO17iFPAFQhwJ7fty6Ky55IH.n7g2KzNQxI9EY1
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+service routing protocols model multi-agent
+!
+hostname Router5
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+banner motd
+------------------------ Authorized Access Only !!! -----------------------------
+EOF
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   description Transit-Router eth6 192.168.200.17
+   no switchport
+   ip address 192.168.200.18/30
+   ip ospf area 0.0.0.0
+!
+interface Management0
+   ip address 172.20.20.10/24
+   ipv6 address 3fff:172:20:20::a/64
+!
+interface Vlan1
+   ip address 192.168.50.1/24
+   ip ospf area 0.0.0.0
+!
+ip routing
+!
+ip route 0.0.0.0/0 172.20.20.1
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+router ospf 1
+   router-id 50.50.50.50
+   auto-cost reference-bandwidth 1000
+   max-lsa 12000
+!
+end
