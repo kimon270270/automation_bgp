@@ -25,7 +25,6 @@ description Transit-Router eth6 192.168.200.17
 ip address 192.168.200.18/30
 
 ip ospf area 0
-ip ospf network point-to-point
 exit
 
 
@@ -43,4 +42,3 @@ banner motd
 EOF
 
 exit
-write memory

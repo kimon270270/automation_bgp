@@ -49,4 +49,3 @@ banner motd
 EOF
 
 exit
-write memory
