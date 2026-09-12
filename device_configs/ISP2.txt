@@ -39,7 +39,8 @@ ip address 192.168.200.30/30
 
 
 interface vlan 1
-no shut
+no shutdown
+no autostate
 ip address 192.168.90.1/24
 
 exit
