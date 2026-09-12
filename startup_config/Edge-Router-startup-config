@@ -1,7 +1,7 @@
-! Startup-config last modified at Sat Sep 12 20:41:03 2026 by admin
+! Startup-config last modified at Sat Sep 12 21:01:18 2026 by admin
 ! device: Edge-Router (cEOSLab, EOS-4.36.1F-48405728.4361F.1 (engineering build))
 !
-enable password sha512 $6$WMNRXUthQumyzfAE$AOBOuS/u4/3DPaMdLXc5322DGrX8V2.nnzycKYnCHpOrYWYEcWYtE4j2.Vu0KD8bN6VAZ2kimfV8.evE5kaLH1
+enable password sha512 $6$UpvVebqHQUF/xVAD$itEp7EsD1cTOk1a5pSQvQZGY4BC1qoTWe/gThgFnnCsapkRC5aTVg5FsJ.V0OXw5h2gaoZqBBXPGoh9kNids6/
 no aaa root
 !
 username admin privilege 15 role network-admin secret sha512 $6$0/eBBtIWVgnn19kn$6IQiqTCkFKYlegq6TckMAmOXqlFIYanAzr2olfz5i2rJJdjk7WHBZlxzaX2q7LaeRVerQbVPsRp4hDt3NF5gQ0
@@ -70,6 +70,7 @@ route-map Secondary-Path permit 10
 !
 router bgp 65001
    router-id 2.2.2.2
+   neighbor 192.168.200.21 remote-as 65001
    neighbor 192.168.200.21 default-originate always
    neighbor 192.168.200.26 remote-as 65002
    neighbor 192.168.200.26 route-map Primary-Path in

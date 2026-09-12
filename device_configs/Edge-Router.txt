@@ -16,6 +16,8 @@ neighbor 192.168.200.26 remote-as 65002
 
 neighbor 192.168.200.30 remote-as 65003
 
+neighbor 192.168.200.21 remote-as 65001
+
 
 
 network 192.168.70.0/24
