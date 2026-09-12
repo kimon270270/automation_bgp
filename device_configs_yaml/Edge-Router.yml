@@ -41,6 +41,15 @@ bgp:
   - ip: 192.168.50.0
     cidr: /24
 
+  - ip: 192.168.200.20
+    cidr: /30
+
+  - ip: 192.168.200.24
+    cidr: /30
+
+  - ip: 192.168.200.28
+    cidr: /30
+
 primaryPath:
   description: "Connection to ISP1 - Primary"
   localPref: 200

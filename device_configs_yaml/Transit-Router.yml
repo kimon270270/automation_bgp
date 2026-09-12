@@ -33,6 +33,21 @@ bgp:
   - ip: 192.168.50.0
     cidr: /24
 
+  - ip: 192.168.200.16
+    cidr: /30
+
+  - ip: 192.168.200.12
+    cidr: /30
+
+  - ip: 192.168.200.8
+    cidr: /30
+
+  - ip: 192.168.200.4
+    cidr: /30
+
+  - ip: 192.168.200.0
+    cidr: /30
+
 interfaces:
 - port: 1
   description: "Edge-Router eth1 192.168.200.22"

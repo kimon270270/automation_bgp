@@ -18,6 +18,10 @@ neighbor 192.168.200.38 remote-as 65004
 
 network 192.168.90.0/24
 
+network 192.168.200.28/30
+
+network 192.168.200.36/30
+
 exit
 
 
