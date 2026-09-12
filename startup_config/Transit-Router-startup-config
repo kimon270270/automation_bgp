@@ -1,7 +1,7 @@
-! Startup-config last modified at Sat Sep 12 17:25:13 2026 by admin
+! Startup-config last modified at Sat Sep 12 20:40:47 2026 by admin
 ! device: Transit-Router (cEOSLab, EOS-4.36.1F-48405728.4361F.1 (engineering build))
 !
-enable password sha512 $6$/fvaPHldFmHDkxQV$Ibtc3Y7ZKJgXQTY.wGzYDakR4KE2gF3ffZauhUsWdoaxTfU/x.g/700z86NblmeC2YYWyDbIF3Q2oCIbOfy1b1
+enable password sha512 $6$.0QC49PVdUpUvzKM$fGY4o49tOW/Qsymfevu/t0PAIDu3pYjOUbmfpmj1KwwuS/E2yp1/6ThL/yNGGBDcojjLpaKLIETtqLTmOiE1s/
 no aaa root
 !
 username admin privilege 15 role network-admin secret sha512 $6$v3yxa4TxVK.Cd8SC$EsJfiQE/LrCPSvRai4SsEZf2qrI8LEFVyecRFowsVscjzmTUVTNpVu2GkR1u0JEx8TodKmcrzv8IV7h4KBA5H1
@@ -68,8 +68,8 @@ interface Ethernet6
    ip ospf area 0.0.0.0
 !
 interface Management0
-   ip address 172.20.20.7/24
-   ipv6 address 3fff:172:20:20::7/64
+   ip address 172.20.20.4/24
+   ipv6 address 3fff:172:20:20::4/64
 !
 interface Vlan1
    no autostate
@@ -78,12 +78,11 @@ interface Vlan1
 !
 ip routing
 !
-ip route 0.0.0.0/0 172.20.20.1
-!
 ipv6 route ::/0 3fff:172:20:20::1
 !
 router bgp 65001
    router-id 9.9.9.9
+   neighbor 192.168.200.22 remote-as 65001
    network 192.168.10.0/24
    network 192.168.20.0/24
    network 192.168.30.0/24

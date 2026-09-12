@@ -10,6 +10,11 @@ router-id 20.20.20.20
 
 
 
+neighbor 192.168.200.33 remote-as 65002
+
+neighbor 192.168.200.37 remote-as 65003
+
+
 
 network 192.168.100.0/24
 

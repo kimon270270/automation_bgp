@@ -10,6 +10,9 @@ router-id 9.9.9.9
 
 
 
+neighbor 192.168.200.22 remote-as 65001
+
+
 
 network 192.168.60.0/24
 

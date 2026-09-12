@@ -1,7 +1,7 @@
-! Startup-config last modified at Sat Sep 12 17:25:20 2026 by admin
+! Startup-config last modified at Sat Sep 12 20:40:53 2026 by admin
 ! device: ISP1 (cEOSLab, EOS-4.36.1F-48405728.4361F.1 (engineering build))
 !
-enable password sha512 $6$W9Lrbspeq/ZZXWvH$L/ZFhsB6zCqoBbTRpDDsnQRy5nNdrknv2LcwXMI77sxAP3L/iRkGOgwlsigZ/hvfiwe9MkS8ASj77GzI.2c6i1
+enable password sha512 $6$nTR1EGSOxg4bjN90$Z2kpBcIOK.fJg3tDJuwjFtVZoAJENVCdn27e86waYLhGxZ/d.pyZ3dWVZD1azB3GQpU7fQ45dKFmZBqBhQMRG/
 no aaa root
 !
 username admin privilege 15 role network-admin secret sha512 $6$MOgk7Ka7SrJ6URDi$iRLaZ7PV618WPE7Oa9Jgiq.VXgSF6LficAjODk9AW5PzypJFzE1jZftPi5K/uglfMXGsJM0mvSP/rm4taL7.L1
@@ -42,8 +42,8 @@ interface Ethernet2
    ip address 192.168.200.26/30
 !
 interface Management0
-   ip address 172.20.20.9/24
-   ipv6 address 3fff:172:20:20::9/64
+   ip address 172.20.20.6/24
+   ipv6 address 3fff:172:20:20::6/64
 !
 interface Vlan1
    no autostate
@@ -57,6 +57,8 @@ ipv6 route ::/0 3fff:172:20:20::1
 !
 router bgp 65002
    router-id 10.10.10.10
+   neighbor 192.168.200.25 remote-as 65001
+   neighbor 192.168.200.34 remote-as 65004
    network 192.168.80.0/24
 !
 end

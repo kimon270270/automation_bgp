@@ -1,7 +1,7 @@
-! Startup-config last modified at Sat Sep 12 17:24:58 2026 by admin
+! Startup-config last modified at Sat Sep 12 20:40:43 2026 by admin
 ! device: Internet (cEOSLab, EOS-4.36.1F-48405728.4361F.1 (engineering build))
 !
-enable password sha512 $6$iUkJ4G5aK3WVJ/j3$bzpbN4u7R.XxD5FvPaB9AFrgKNyqV51CXWVI3kzBClaQGRmwzHGaszR0glShKzYxWTIHfyWXJLps49g7htItT/
+enable password sha512 $6$HEFgYxC6YeJSko4k$9PVhwdCAulWPKTnOgfQI7BPmAxGb1bnhmsgEUOrkUrOFMHHoJ4CZOCMiFANdGBTqeOtp334dgTYrqwcVBIF1i.
 no aaa root
 !
 username admin privilege 15 role network-admin secret sha512 $6$VeOUuCJQQpsPGL.0$pZmToYTE6r2EYSPG50bks2FTSyTIKVoHN/M4iRReIvce1lPw9ANwsviWxkmDthpgxPFpRwE1hOP6AuSfXDUaD0
@@ -57,6 +57,8 @@ ipv6 route ::/0 3fff:172:20:20::1
 !
 router bgp 65004
    router-id 20.20.20.20
+   neighbor 192.168.200.33 remote-as 65002
+   neighbor 192.168.200.37 remote-as 65003
    network 192.168.100.0/24
 !
 end

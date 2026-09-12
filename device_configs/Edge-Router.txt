@@ -11,10 +11,10 @@ router-id 2.2.2.2
 
 neighbor 192.168.200.21 default-originate always
 
+
 neighbor 192.168.200.26 remote-as 65002
 
 neighbor 192.168.200.30 remote-as 65003
-
 
 
 

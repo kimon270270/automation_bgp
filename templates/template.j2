@@ -10,10 +10,10 @@ router-id {{ routerID.bgp }}
 
 {% if device.role == 'Edge' %}
 neighbor 192.168.200.21 default-originate always
+{% endif %}
 {% for neighbor in bgp.neighborship  %}
 neighbor {{ neighbor.ip }} remote-as {{ neighbor.as }}
 {% endfor %}
-{% endif %}
 
 {% for advert in bgp.advertisement %}
 network {{ advert.ip }}{{ advert.cidr }}
