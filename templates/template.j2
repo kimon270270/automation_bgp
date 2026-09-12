@@ -65,7 +65,7 @@ exit
 interface vlan 1
 no shut
 ip address {{ device.vlan1Ip }}{{ device.vlan1cidr }}
-{% if device.role == 'Site' %}
+{% if device.role in [ 'Transit', 'Site' ] %}
 ip ospf area 0
 {% endif %}
 exit
