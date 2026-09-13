@@ -4,6 +4,8 @@ ip routing
 hostname {{ device.name }}
 enable password DeviceAdmin
 
+no ip route 172.20.20.1
+
 {% if device.role in ['Edge', 'ISP', 'Internet', 'Transit'] %}
 router bgp {{ bgp.AS }}
 router-id {{ routerID.bgp }}

@@ -1,7 +1,7 @@
-! Startup-config last modified at Sat Sep 12 17:25:09 2026 by admin
+! Startup-config last modified at Sat Sep 12 23:58:29 2026 by admin
 ! device: Router5 (cEOSLab, EOS-4.36.1F-48405728.4361F.1 (engineering build))
 !
-enable password sha512 $6$HZelz5Hzvi.yibLr$2Jqb0/27sYLGXsydcNL2JuaW/4lyVWcVvoBzApw0lGQvzRFqXTPs28rWrOf2gJUsKlAcIw6x85OUp.OsVInS11
+enable password sha512 $6$nooyRH2WdGgqKLHF$W8cNGCnW71cvZOovgxKRame6l11iStyMCdF81VeCxjt9oUVYTfkXWrBo3dUxJiOd4yOjl9rZmSKQJSr34V5MI0
 no aaa root
 !
 username admin privilege 15 role network-admin secret sha512 $6$NbrCU/jfdUK3SxJz$442d9/4wJ9DfH4cdcO6aj8Ov6UaZuWh1Uf.kbsJFREQ2MBJoO17iFPAFQhwJ7fty6Ky55IH.n7g2KzNQxI9EY1
@@ -38,8 +38,8 @@ interface Ethernet1
    ip ospf area 0.0.0.0
 !
 interface Management0
-   ip address 172.20.20.6/24
-   ipv6 address 3fff:172:20:20::6/64
+   ip address 172.20.20.10/24
+   ipv6 address 3fff:172:20:20::a/64
 !
 interface Vlan1
    no autostate
@@ -47,8 +47,6 @@ interface Vlan1
    ip ospf area 0.0.0.0
 !
 ip routing
-!
-ip route 0.0.0.0/0 172.20.20.1
 !
 ipv6 route ::/0 3fff:172:20:20::1
 !

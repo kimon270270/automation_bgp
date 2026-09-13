@@ -1,7 +1,7 @@
-! Startup-config last modified at Sat Sep 12 21:01:18 2026 by admin
+! Startup-config last modified at Sat Sep 12 23:58:26 2026 by admin
 ! device: Edge-Router (cEOSLab, EOS-4.36.1F-48405728.4361F.1 (engineering build))
 !
-enable password sha512 $6$UpvVebqHQUF/xVAD$itEp7EsD1cTOk1a5pSQvQZGY4BC1qoTWe/gThgFnnCsapkRC5aTVg5FsJ.V0OXw5h2gaoZqBBXPGoh9kNids6/
+enable password sha512 $6$rDCd1bK.Mzz69.uE$ylcDYGByx12Mpvb0ja2xfhkbzoWCH16UdmHe/SS.HYhjnRylrSDyy7ZF/um/UgoYZWStFA8M1oqyF0UzSlzIj0
 no aaa root
 !
 username admin privilege 15 role network-admin secret sha512 $6$0/eBBtIWVgnn19kn$6IQiqTCkFKYlegq6TckMAmOXqlFIYanAzr2olfz5i2rJJdjk7WHBZlxzaX2q7LaeRVerQbVPsRp4hDt3NF5gQ0
@@ -56,8 +56,6 @@ interface Vlan1
 !
 ip routing
 !
-ip route 0.0.0.0/0 172.20.20.1
-!
 ipv6 route ::/0 3fff:172:20:20::1
 !
 route-map Primary-Path permit 10
@@ -83,5 +81,8 @@ router bgp 65001
    network 192.168.50.0/24
    network 192.168.60.0/24
    network 192.168.70.0/24
+   network 192.168.200.20/30
+   network 192.168.200.24/30
+   network 192.168.200.28/30
 !
 end

@@ -4,6 +4,8 @@ ip routing
 hostname Router1
 enable password DeviceAdmin
 
+no ip route 172.20.20.1
+
 
 
 

@@ -1,7 +1,7 @@
-! Startup-config last modified at Sat Sep 12 17:25:06 2026 by admin
+! Startup-config last modified at Sat Sep 12 23:58:13 2026 by admin
 ! device: Router2 (cEOSLab, EOS-4.36.1F-48405728.4361F.1 (engineering build))
 !
-enable password sha512 $6$yqDCOZx3JOwmM/9L$Gj38gYGgHXe.6bOvRw04txsCl0yq9JwwNWsMeYrqDj57y5WzRmcRjGiOR9/dJ.oBWtcuaz7rVnSjLubJN8Y6Q.
+enable password sha512 $6$dtXfXYh1DCDxt5yk$CPA46x4LShNvqDqF6doI4mSL2PRo9ViBt2isPOc9lWxmHZMdPGnV3NGs0CEc2lo19bIiC8YelvZM0M6jHWHEd1
 no aaa root
 !
 username admin privilege 15 role network-admin secret sha512 $6$DutRUCPvJTVfhmI9$liEMGIe/jkS1A54ztnemyoT119BhQQXowvSh3fF.twmSjOYw/XedQuqUqTtAY5eCMkV468AC/M4fKOQpjxHnp/

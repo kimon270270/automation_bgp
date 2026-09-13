@@ -4,6 +4,8 @@ ip routing
 hostname Transit-Router
 enable password DeviceAdmin
 
+no ip route 172.20.20.1
+
 
 router bgp 65001
 router-id 9.9.9.9

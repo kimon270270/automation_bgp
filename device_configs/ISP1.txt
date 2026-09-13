@@ -4,6 +4,8 @@ ip routing
 hostname ISP1
 enable password DeviceAdmin
 
+no ip route 172.20.20.1
+
 
 router bgp 65002
 router-id 10.10.10.10

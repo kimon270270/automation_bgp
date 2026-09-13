@@ -1,7 +1,7 @@
-! Startup-config last modified at Sat Sep 12 20:40:47 2026 by admin
+! Startup-config last modified at Sat Sep 12 23:58:10 2026 by admin
 ! device: Transit-Router (cEOSLab, EOS-4.36.1F-48405728.4361F.1 (engineering build))
 !
-enable password sha512 $6$.0QC49PVdUpUvzKM$fGY4o49tOW/Qsymfevu/t0PAIDu3pYjOUbmfpmj1KwwuS/E2yp1/6ThL/yNGGBDcojjLpaKLIETtqLTmOiE1s/
+enable password sha512 $6$EVwPpX1bEjNiPLcQ$fTpyNmkNpbG3c70BqhZYYprVr2OOarD7Vj77zDZ91Y7/ygk1fKVDJAvQgPH8p1bOH5yY6CqsyB21kv0KYThgz.
 no aaa root
 !
 username admin privilege 15 role network-admin secret sha512 $6$v3yxa4TxVK.Cd8SC$EsJfiQE/LrCPSvRai4SsEZf2qrI8LEFVyecRFowsVscjzmTUVTNpVu2GkR1u0JEx8TodKmcrzv8IV7h4KBA5H1
@@ -89,6 +89,11 @@ router bgp 65001
    network 192.168.40.0/24
    network 192.168.50.0/24
    network 192.168.60.0/24
+   network 192.168.200.0/30
+   network 192.168.200.4/30
+   network 192.168.200.8/30
+   network 192.168.200.12/30
+   network 192.168.200.16/30
 !
 router ospf 1
    router-id 60.60.60.60
