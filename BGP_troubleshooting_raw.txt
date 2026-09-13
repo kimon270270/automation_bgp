@@ -1,0 +1,64 @@
+
+
+errors that i came across:
+1) reading yml variable file like normal file
+	I used noral f.read() function to read the yml files but it was a mistake. Like json file we need to read yml file with PyYaml library. If we read the file normally and try to pass the file for rendering templates we will get errors.
+2) configuration mismatch:
+	While creating templates few of the commands that I used were Cisco IOS command but I was using Arista layer3 switches. Arista and Cisco command syntaxes are quite similar to each other but they are not exact same. I used 
+
+3) loop
+	For the bgp section in the template I mistakenly placed the exit command inside the loop and for each iteration of the loop exit would run. This was an issue because i was trying to advertise the networks using network command inside bgp sub-interface but i would exit out and then use network command. This threw me an error each time as in the global config mode there network command does not exist / is not supported.
+
+4) command timeout triggered, timeout value is 30 secs.
+	The connection would time out every time i would run the playbook. This happened because of BGP configuration requires extra time to parse, validate, and commit large block of text. Fix was to just increase the command and connect timeout (command_timeout, connect_timeout) under [persistent_connection] section header.
+	It was not being caused by BGP rather it was because of the Banner. I was not using correct syntax. To finalize/fix the banner message EOF needs to be in a new line by it self but I though that EOF needed to be at the end of the message.
+
+
+5) commit Invalid Input
+	I do not have any commit command in any of the files whether it is configs, templates, playbook or the python code. But ansible is saying that i am sending commit command and the router is not recognizing the command.
+	Why is it doing it? The config files do not have commit in them. Digging into this issue it is the ansible.netcommon.cli_config and the arista.eos.eos network os that is passing the command to the device.
+	I explicitly mentioned commit: no in the palybook inside the ansible.netcommon.cli_config module but I am still getting this error.
+	Tried the solution provide by ChatGPT -- moving the privilege escatation to inventory.ini, using arista.eos.eos_config, ansible_eos_use_sessions = false but that did not work. Rather working command like router-id in the correct sub-interface configuration level were also giving errors. Reverted back to the original.
+	Joined reddit community and posted the issue, one person tried helping but we were not able to trouble shoot the issue.
+	Now, redirecting the approach. Rather than using ansible I will be using python (netmiko to push the configs directly to the devices.)
+	The commands were written on the device and saved but i wanted the playbook to show no errors at all which i was not able to achieve thats why i am moving towards using netmiko and python to push entire configs to the devices.
+
+5) Redirection with python
+	Was able to successfully load all the configs with python. This was far more easier then using ansible. No error while running the code.
+
+
+6) Role for Transit router:
+	When changing name of the device I had forgotten to change the role for Transit router. I was kept as Reflector thats why none of the bgp and ospf related configuration were being applied to the router. Fixed that and the commands were working but i still had one issue. The neighbors were forming between the routers but the ip addresses were not being populated in the routing table.
+	I knew that to advertise a network at least one device needs to have a ip address from that network that's why i had added an ip address in the vlan1 interface of all the routers but I was still not getting the addresses dynamically as no physical port in vlan1 is up. To make the addresses advertise while the addresses were only added to the vlan1 of routers I added no autostate which made the router ignore if any of the physical port in vlan1 is up and since i was advertising the network from the valn1 int directly the ip routes started to populate after that.
+	Researched whether i will have the same issue with bgp and found that I will so updated the template to include no autostate in vlan1 for all the routers.
+
+
+
+7) OSPF working BGP not working:
+	OSPF working tested by pinging all the routers from Router5 (Router 1-4 and transit) and it is working. BGP not working. I was not forming neigbborship. In the template the command was enclosed in if statement which would only allow Edege to use the neighborship commands.
+	Fixed that and checked the routing table. BGP working. Able to see eBGP peers but i was not able to see the iBGP peering between edge router and transit router. transit router had the neighborship command but edge did not have it. Checked template variable file for edge router, ip for iBGP peering was missing added it and checked the routing table.
+	iBGP working. Edge router has all the internal route from iBGP and Edge router is the gateway of last resort for transit router as intended. Transit router is also getting the ip addresses for other ASs from iBGP. Also show ip bgp on edge router shows that ISP1 is the primary route as intended as there local pref is higher. Prepending the routes are also working. show ip bgp command shows that the preferred routes for all the internal network of AS 65001 is through router 1 (192.168.200.33). When i checked the show ip bgp on ISP 2. For all the eBGP peers the preferred route to the internal network of AS65001 is through ISP1. I had specifically made the router-id of ISP2 smaller than that of ISP1 such that ISP2 would be primary route due to tie braker and I would know some command/config in bgp is wrong.
+	All eBGP peers have the routes to the internal network. Thus eBGP working properly.
+
+
+
+
+
+TESTING Connectivity:
+Performing traceroute and checking if the packets are taking the intended route. Trying to reach the Internet router from all the internal routers (Router1 - 5)
+the path the packets need to follow is Transit --> edge --> ISP1 --> Internet
+
+when i first performed this ICMP test I was not able the desired result. the packet was going to 172.20.20.1 and not the transit router. I had configured default-information originate always on the transit router but when i checked the ip route for router5 transit router was not the gateway of last resort. Then i checked running config where there was a static default route (172.20.20.1). I had not added that and i believe that was a default configuration from containerlab. I removed that route and checked ip route and the transit router became gateway of last resort. Tried the connectivity test again.
+
+The packet goes to the next hop and then wont move. I am able to ping transit but not edge from router5, i am able to ping edge but not isp's or internet from transit, and i am able to ping isps but not internet from edge. All the routers have path to and from the other router but they are not able to communicate after their next hop.
+
+I guess i understood why it was not working. I am not advertising all the point to point links between the routers. How i came up with this hypothesis is that i tried pinging 192.168.200.33 (ISP1 link to internet) from internet router and it worked. Then i tried pinging 192.168.200.26 (ISP1 connection to edge router) and that failed. so i believe this is happening because i am not advertising the point-to-point link. Yup! that was what had caused the issue. After advertising all the routes including the point to point i was able to ping across the network
+
+Also the default route 172.20.20.1 was also causing issue. removed that from all the device (added the command to template) and I was able to ping from internal routers to internet.
+
+The path the packet took was also the intended path.
+	
+
+
+
+
