@@ -1,7 +1,7 @@
-! Startup-config last modified at Sat Sep 12 23:58:26 2026 by admin
+! Startup-config last modified at Sun Sep 13 00:10:36 2026 by admin
 ! device: Edge-Router (cEOSLab, EOS-4.36.1F-48405728.4361F.1 (engineering build))
 !
-enable password sha512 $6$rDCd1bK.Mzz69.uE$ylcDYGByx12Mpvb0ja2xfhkbzoWCH16UdmHe/SS.HYhjnRylrSDyy7ZF/um/UgoYZWStFA8M1oqyF0UzSlzIj0
+enable password sha512 $6$EEZ5HcJjVV1oZgTO$.OYEgeiqtcCiBXgMW8M2tBZOtZ4t62t5ZofMrYS1SUsT19AHdKBDP39tmQado0tXTBYsqP6U.om7RNps4McGN/
 no aaa root
 !
 username admin privilege 15 role network-admin secret sha512 $6$0/eBBtIWVgnn19kn$6IQiqTCkFKYlegq6TckMAmOXqlFIYanAzr2olfz5i2rJJdjk7WHBZlxzaX2q7LaeRVerQbVPsRp4hDt3NF5gQ0

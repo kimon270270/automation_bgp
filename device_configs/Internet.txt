@@ -4,7 +4,7 @@ ip routing
 hostname Internet
 enable password DeviceAdmin
 
-no ip route 172.20.20.1
+no ip route 0.0.0.0/0 172.20.20.1
 
 
 router bgp 65004
